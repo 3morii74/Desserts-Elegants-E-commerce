@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-end m-2 p-2">
-                <a href="{{ route('admin.reservations.create') }}"
+                <a href="{{ route('admin.orders.create') }}"
                     class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">New Order</a>
             </div>
             <div class="flex flex-col">
@@ -32,6 +32,14 @@
                                         </th>
                                         <th scope="col"
                                             class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                            phone number
+                                        </th>
+                                        <th scope="col"
+                                            class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
+                                            address
+                                        </th>
+                                        <th scope="col"
+                                            class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
                                             Date
                                         </th>
                                         <th scope="col"
@@ -45,36 +53,56 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($reservations as $reservation)
+                                    {{-- @dd($orders , $items); --}}
+                                    @foreach ($orders as $order)
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td
                                                 class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{ $reservation->first_name }} {{ $reservation->last_name }}
+                                                {{ $order->id }}
                                             </td>
                                             <td
                                                 class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                {{ $reservation->email }}
+                                                {{ $order->name  }}
                                             </td>
                                             <td
                                                 class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                {{ $reservation->res_date }}
+                                                {{ $order->email }}
                                             </td>
                                             <td
                                                 class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                {{ $reservation->table->name }}
+                                                {{ $order->phone_number }}
                                             </td>
                                             <td
                                                 class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                                {{ $reservation->guest_number }}
+                                                {{ $order->address }}
+                                            </td>
+                                            <td
+                                                class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                {{ $order->created_at }}
+                                            </td>
+                                            <td
+                                                class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
+                                                @php
+                                                $allItems = collect();
+                                                foreach ($items as $item) {
+                                                    if ($item->order_id == $order->id) {
+                                                        $allItems = $allItems->merge([$item]);
+                                                    }
+                                                }
+                                                // $productname =$allItems->product_name;
+                                            @endphp
+
+                                            @foreach ($allItems as $item)
+                                            - {{ $item->product_name }} ({{$item->quantity}}) <br>
+                                            @endforeach
                                             </td>
                                             <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
                                                 <div class="flex space-x-2">
-                                                    <a href="{{ route('admin.reservations.edit', $reservation->id) }}"
-                                                        class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg  text-white">Edit</a>
+
                                                     <form
                                                         class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white"
                                                         method="POST"
-                                                        action="{{ route('admin.reservations.destroy', $reservation->id) }}"
+                                                        action="{{ route('admin.orders.destroy', $order->id) }}"
                                                         onsubmit="return confirm('Are you sure?');">
                                                         @csrf
                                                         @method('DELETE')

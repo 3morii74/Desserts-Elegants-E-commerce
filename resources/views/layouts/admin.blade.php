@@ -50,8 +50,8 @@
                     :active="request()->routeIs('admin.tables.index')">
                     {{ __('Statistics') }}
                 </x-admin-nav-link>
-                <x-admin-nav-link :href="route('admin.reservations.index')"
-                    :active="request()->routeIs('admin.reservations.index')">
+                <x-admin-nav-link :href="route('admin.orders.index')"
+                    :active="request()->routeIs('admin.orders.index')">
                     {{ __('Orders') }}
                 </x-admin-nav-link>
                 <div @click.away="open = false" class="relative" x-data="{ open: false }">

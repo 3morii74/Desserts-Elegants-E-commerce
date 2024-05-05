@@ -9,6 +9,8 @@ use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryControll
 use App\Http\Controllers\Frontend\ItemController as FrontendItemController;
 use App\Http\Controllers\Frontend\ReservationController as FrontendReservationController;
 use App\Http\Controllers\Frontend\WelcomeController;
+use App\Http\Controllers\OrderController;
+
 use Illuminate\Support\Facades\Route;
 
 
@@ -16,6 +18,9 @@ Route::get('/', [WelcomeController::class, 'index']);
 Route::get('/categories', [FrontendCategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/{category}', [FrontendCategoryController::class, 'show'])->name('categories.show');
 Route::get('/items', [FrontendItemController::class, 'index'])->name('menus.index');
+// Route::get('/admin/orders', [OrderController::class, 'index'])->name('admin.orders.index');
+
+
 Route::get('/reservation/step-one', [FrontendReservationController::class, 'stepOne'])->name('reservations.step.one');
 Route::post('/reservation/step-one', [FrontendReservationController::class, 'storeStepOne'])->name('reservations.store.step.one');
 Route::get('/reservation/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
@@ -31,7 +36,7 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::resource('/categories', CategoryController::class);
     Route::resource('/menus', ItemController::class);
     Route::resource('/tables', TableController::class);
-    Route::resource('/reservations', ReservationController::class);
+    Route::resource('/orders', OrderController::class);
 });
 
 require __DIR__ . '/auth.php';
