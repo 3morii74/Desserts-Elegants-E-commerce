@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\ReservationController;
 use App\Http\Controllers\Admin\TableController;
+use App\Http\Controllers\AdminStaticPageController;
+
 use App\Http\Controllers\Frontend\CategoryController as FrontendCategoryController;
 use App\Http\Controllers\Frontend\ItemController as FrontendItemController;
 use App\Http\Controllers\Frontend\ReservationController as FrontendReservationController;
@@ -44,8 +46,9 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::get('/', [AdminController::class, 'index'])->name('index');
     Route::resource('/categories', CategoryController::class);
     Route::resource('/menus', ItemController::class);
-    Route::resource('/tables', TableController::class);
+    Route::resource('/tables', AdminStaticPageController::class);
     Route::resource('/orders', OrderController::class);
+    // Route::resource('/static-pages', AdminStaticPageController::class);
 });
 
 require __DIR__ . '/auth.php';
