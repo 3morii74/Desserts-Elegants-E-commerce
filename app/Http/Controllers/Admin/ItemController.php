@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\MenuStoreRequest;
+use App\Http\Requests\ItemStoreRequest;
 use App\Models\Category;
-use App\Models\Menu;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class MenuController extends Controller
+class ItemController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,7 +18,7 @@ class MenuController extends Controller
      */
     public function index()
     {
-        $menus = Menu::all();
+        $menus = Item::all();
         return view('admin.menus.index', compact('menus'));
     }
 
@@ -39,22 +39,25 @@ class MenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(MenuStoreRequest $request)
+    public function store()
     {
-        $image = $request->file('image')->store('public/menus');
+        // @dd(request()->all());
+        $category_id = request()->categories[0];
+        $image = request()->file('image')->store('public/menus');
 
-        $menu = Menu::create([
-            'name' => $request->name,
-            'description' => $request->description,
+        $menu = Item::create([
+            'name' => request()->name,
+            'description' => request()->description,
             'image' => $image,
-            'price' => $request->price
+            'price' => request()->price,
+            'category_id' =>$category_id
         ]);
 
-        if ($request->has('categories')) {
-            $menu->categories()->attach($request->categories);
-        }
+        // if ($request->has('categories')) {
+        //     $menu->categories()->attach($request->categories);
+        // }
 
-        return to_route('admin.menus.index')->with('success', 'Menu created successfully.');
+        return to_route('admin.menus.index')->with('success', 'Item created successfully.');
     }
 
 
@@ -64,7 +67,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Menu $menu)
+    public function edit(Item $menu)
     {
         $categories = Category::all();
         return view('admin.menus.edit', compact('menu', 'categories'));
@@ -77,7 +80,7 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Menu $menu)
+    public function update(Request $request, Item $menu)
     {
         $request->validate([
             'name' => 'required',
@@ -89,18 +92,20 @@ class MenuController extends Controller
             Storage::delete($menu->image);
             $image = $request->file('image')->store('public/menus');
         }
-
+        // @dd($request->categories[0]);
+        $single = $request->categories[0];
         $menu->update([
             'name' => $request->name,
             'description' => $request->description,
             'image' => $image,
-            'price' => $request->price
+            'price' => $request->price,
+            'category_id' =>$single
         ]);
 
-        if ($request->has('categories')) {
-            $menu->categories()->sync($request->categories);
-        }
-        return to_route('admin.menus.index')->with('success', 'Menu updated successfully.');
+        // if ($request->has('categories')) {
+        //     $menu->categories()->sync($request->categories);
+        // }
+        return to_route('admin.menus.index')->with('success', 'Item updated successfully.');
     }
 
     /**
@@ -109,11 +114,11 @@ class MenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Menu $menu)
+    public function destroy(Item $menu)
     {
         Storage::delete($menu->image);
-        $menu->categories()->detach();
+
         $menu->delete();
-        return to_route('admin.menus.index')->with('danger', 'Menu deleted successfully.');
+        return to_route('admin.menus.index')->with('danger', 'Item deleted successfully.');
     }
 }

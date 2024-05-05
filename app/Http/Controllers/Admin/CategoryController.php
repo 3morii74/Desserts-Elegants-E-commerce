@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
+use App\Models\Item;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -108,7 +110,7 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         Storage::delete($category->image);
-        $category->menus()->detach();
+        $items = Item::where('category_id' , $category->id)->delete();
         $category->delete();
 
         return to_route('admin.categories.index')->with('danger', 'Category deleted successfully.');

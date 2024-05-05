@@ -25,8 +25,7 @@
             x-data="{ open: false }">
             <div class="flex flex-row items-center justify-between flex-shrink-0 px-8 py-4">
                 <a href="#"
-                    class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">Flowtrail
-                    UI</a>
+                    class="text-lg font-semibold tracking-widest text-gray-900 uppercase rounded-lg dark:text-white focus:outline-none focus:shadow-outline">DashBoard</a>
                 <button class="rounded-lg md:hidden focus:outline-none focus:shadow-outline" @click="open = !open">
                     <svg fill="currentColor" viewBox="0 0 20 20" class="w-6 h-6">
                         <path x-show="!open" fill-rule="evenodd"
@@ -45,15 +44,15 @@
                     {{ __('Categories') }}
                 </x-admin-nav-link>
                 <x-admin-nav-link :href="route('admin.menus.index')" :active="request()->routeIs('admin.menus.index')">
-                    {{ __('Menus') }}
+                    {{ __('Items') }}
                 </x-admin-nav-link>
                 <x-admin-nav-link :href="route('admin.tables.index')"
                     :active="request()->routeIs('admin.tables.index')">
-                    {{ __('Tables') }}
+                    {{ __('Statistics') }}
                 </x-admin-nav-link>
                 <x-admin-nav-link :href="route('admin.reservations.index')"
                     :active="request()->routeIs('admin.reservations.index')">
-                    {{ __('Reservations') }}
+                    {{ __('Orders') }}
                 </x-admin-nav-link>
                 <div @click.away="open = false" class="relative" x-data="{ open: false }">
                     <button @click="open = !open"

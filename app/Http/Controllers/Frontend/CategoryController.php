@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Item;
+
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -14,8 +16,10 @@ class CategoryController extends Controller
         return view('categories.index', compact('categories'));
     }
 
-    public function show(Category $category)
+    public function show($category)
     {
-        return view('categories.show', compact('category'));
+        // @dd($category);
+        $Items = Item::where('category_id', $category)->get();
+        return view('categories.show', ['category'=>$Items]);
     }
 }
