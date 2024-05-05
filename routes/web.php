@@ -32,6 +32,10 @@ Route::post('/register11', [RegisterController::class, 'store'])->name('register
 Route::get('/loginUser', [LoginController::class, 'index'])->name('contact.login');
 Route::post('/check', [LoginController::class, 'check'])->name('login.check');
 
+Route::middleware(['auth'])->get('/myorder', [OrderController::class, 'indexClint'])->name('order.indexClint');
+Route::middleware(['auth'])->delete('/myorder/{order}', [OrderController::class, 'destoryClint'])->name('order.destoryClint');
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

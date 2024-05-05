@@ -29,10 +29,48 @@ class OrderController extends Controller
             // $orderItems += OrderItem::where('order_id' , $ids)->get();
         }
 
+
         // @dd($orderItems);
         return view('admin.orders.index', ['orders' => $orders , 'items' => $orderItems]);
     }
+    public function indexClint()
+    {
+        $userId = auth()->id();
+        // Retrieve all orders
+        $orderItems = collect();
 
+        $orders = Order::where('user_id', $userId)->get();
+
+        //  @dd($orders);
+        foreach ($orders as $order)
+        {
+            $orderId = $order->id;
+            // $ids = $order->pluck('id');
+
+            $items = OrderItem::where('order_id', $orderId)->get();
+
+            $orderItems = $orderItems->merge($items);
+            // $orderItems += OrderItem::where('order_id' , $ids)->get();
+        }
+
+
+        // @dd($orderItems);
+        // return view('orders.index', ['orders' => $orders , 'items' => $orderItems]);
+        return view('order.index',['orders' => $orders , 'items' => $orderItems]);
+
+    }
+    public function destoryClint($order)
+    {
+        //1- delete the post from database
+            //select or find the post
+            //delete the post from database
+        // $order = ::find($postId);
+        // @dd($order);
+        $items = OrderItem::where('order_id' , $order)->delete();
+        Order::where('id' , $order)->delete();
+        //2- redirect to posts.index
+        return to_route('order.indexClint');
+    }
     public function create()
     {
         $items = Item::all();
