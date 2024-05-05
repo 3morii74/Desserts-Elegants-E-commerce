@@ -10,11 +10,12 @@ use App\Http\Controllers\Frontend\ItemController as FrontendItemController;
 use App\Http\Controllers\Frontend\ReservationController as FrontendReservationController;
 use App\Http\Controllers\Frontend\WelcomeController;
 use App\Http\Controllers\OrderController;
-
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\LoginController;
 
 
-Route::get('/', [WelcomeController::class, 'index']);
+Route::get('/', [WelcomeController::class, 'index'])->name('Home');
 Route::get('/categories', [FrontendCategoryController::class, 'index'])->name('categories.index');
 Route::get('/categories/{category}', [FrontendCategoryController::class, 'show'])->name('categories.show');
 Route::get('/items', [FrontendItemController::class, 'index'])->name('menus.index');
@@ -26,6 +27,10 @@ Route::post('/reservation/step-one', [FrontendReservationController::class, 'sto
 Route::get('/reservation/step-two', [FrontendReservationController::class, 'stepTwo'])->name('reservations.step.two');
 Route::post('/reservation/step-two', [FrontendReservationController::class, 'storeStepTwo'])->name('reservations.store.step.two');
 Route::get('/thankyou', [WelcomeController::class, 'thankyou'])->name('thankyou');
+Route::get('/create', [RegisterController::class, 'create'])->name('register.create');
+Route::post('/register11', [RegisterController::class, 'store'])->name('register.store');
+Route::get('/loginUser', [LoginController::class, 'index'])->name('contact.login');
+Route::post('/check', [LoginController::class, 'check'])->name('login.check');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
