@@ -13,7 +13,7 @@
             </div>
             <div class="m-2 p-2 bg-slate-100 rounded">
                 <div class="space-y-8 divide-y divide-gray-200 w-1/2 mt-10">
-                    <form method="POST" action="{{ route('admin.categories.update', $category->id) }}"
+                    <form method="POST" action="{{ route('admin.categories.update', ["id" => $category->id]) }}"
                         enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
@@ -30,6 +30,7 @@
                         <div class="sm:col-span-6">
                             <label for="image" class="block text-sm font-medium text-gray-700"> Image </label>
                             <div>
+                                {{-- @dd($category); --}}
                                 <img class="w-32 h-32" src="{{ Storage::url($category->image) }}">
                             </div>
                             <div class="mt-1">

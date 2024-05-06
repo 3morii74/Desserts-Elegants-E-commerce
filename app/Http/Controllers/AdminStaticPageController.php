@@ -20,7 +20,7 @@ class AdminStaticPageController extends Controller
         $itemIds = $topTwoItems->pluck('item_id');
         $topTwoItemsFromTable = Item::whereIn('id', $itemIds)->get();
         // @dd($topTwoItemsFromTable);
-        return view('admin.tables.index' , compact('topTwoItemsFromTable'));
+        return view('admin.statistics.index' , compact('topTwoItemsFromTable'));
 
     }
 

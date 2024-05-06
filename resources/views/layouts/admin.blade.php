@@ -43,11 +43,11 @@
                     :active="request()->routeIs('admin.categories.index')">
                     {{ __('Categories') }}
                 </x-admin-nav-link>
-                <x-admin-nav-link :href="route('admin.menus.index')" :active="request()->routeIs('admin.menus.index')">
+                <x-admin-nav-link :href="route('admin.items.index')" :active="request()->routeIs('admin.items.index')">
                     {{ __('Items') }}
                 </x-admin-nav-link>
-                <x-admin-nav-link :href="route('admin.tables.index')"
-                    :active="request()->routeIs('admin.tables.index')">
+                 <x-admin-nav-link :href="route('admin.statistics.index')"
+                    :active="request()->routeIs('admin.statistics.index')">
                     {{ __('Statistics') }}
                 </x-admin-nav-link>
                 <x-admin-nav-link :href="route('admin.orders.index')"

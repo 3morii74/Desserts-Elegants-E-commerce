@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function indexAdmin()
     {
         // Retrieve all orders
         $orderItems = collect();
@@ -80,13 +80,13 @@ class OrderController extends Controller
         //2- redirect to posts.index
         return to_route('order.indexClint');
     }
-    public function create()
+    public function createAdmin()
     {
         $items = Item::all();
         return view('admin.Orders.create' , ['items' => $items]);
     }
 
-    public function store()
+    public function storeAdmin()
     {
         // $image = $request->file('image')->store('public/categories');
         $request = request()->item_id;
@@ -119,7 +119,7 @@ class OrderController extends Controller
         return to_route('admin.orders.index')->with('success', 'Category created successfully.');
     }
 
-    public function destroy(Order $order)
+    public function destroyAdmin(Order $order)
     {
         $items = OrderItem::where('order_id' , $order->id)->delete();
         $order->delete();
