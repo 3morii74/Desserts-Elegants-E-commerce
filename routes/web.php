@@ -36,6 +36,7 @@ Route::post('/check', [LoginController::class, 'check'])->name('login.check');
 
 Route::middleware(['auth'])->get('/myorder', [OrderController::class, 'indexClint'])->name('order.indexClint');
 Route::middleware(['auth'])->delete('/myorder/{order}', [OrderController::class, 'destoryClint'])->name('order.destoryClint');
+Route::middleware(['auth','admin'])->post('/orders/admin', [OrderController::class, 'done'])->name('order.done');
 
 
 Route::get('/dashboard', function () {
@@ -47,7 +48,9 @@ Route::middleware(['auth', 'admin'])->name('admin.')->prefix('admin')->group(fun
     Route::resource('/categories', CategoryController::class);
     Route::resource('/menus', ItemController::class);
     Route::resource('/tables', AdminStaticPageController::class);
+    // Route::post('/admin/orders/done', [OrderController::class, 'done'])->name('admin.orders.done');
     Route::resource('/orders', OrderController::class);
+
     // Route::resource('/static-pages', AdminStaticPageController::class);
 });
 

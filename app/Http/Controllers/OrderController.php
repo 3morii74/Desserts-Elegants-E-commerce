@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Item;
+use App\Models\BestSellingItems;
+
 
 
 
@@ -32,6 +34,13 @@ class OrderController extends Controller
 
         // @dd($orderItems);
         return view('admin.orders.index', ['orders' => $orders , 'items' => $orderItems]);
+    }
+    public function done(Order $order)
+    {
+        $items = OrderItem::where('order_id' , $order->id)->delete();
+        $order->delete();
+
+        return to_route('admin.orders.index')->with('successful', 'order done successfully.');
     }
     public function indexClint()
     {
@@ -84,6 +93,7 @@ class OrderController extends Controller
         $item_id = request()->item_id;
 
         $item = Item::find($item_id);
+
         // @dd($item);
         $order = Order::create([
             'user_id' => 1,
@@ -102,16 +112,12 @@ class OrderController extends Controller
             'price' => $item->price,
             'quantity' => request()->quantity,
         ]);
+        $selling = BestSellingItems::where('item_id', $item_id)->first();
+        $selling->sales_volume+= request()->quantity;
+        $selling->save();
 
         return to_route('admin.orders.index')->with('success', 'Category created successfully.');
     }
-    // public function edit(Order $order)
-    // {
-    //     $items = OrderItem::where('order_id', $order->id)->get();
-
-    //     // Show details of a specific order
-    //     return view('admin.orders.edit', ['order' => $order , 'items' => $items]);
-    // }
 
     public function destroy(Order $order)
     {

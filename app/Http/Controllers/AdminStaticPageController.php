@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\BestSellingItems;
+use App\Models\Item;
 use Illuminate\Http\Request;
 
 class AdminStaticPageController extends Controller
@@ -13,8 +14,13 @@ class AdminStaticPageController extends Controller
      */
     public function index()
     {
-        
-        return view('admin.tables.index');
+        $items = BestSellingItems::all();
+        $sortedItems = $items->sortByDesc('sales_volume');
+        $topTwoItems = $sortedItems->take(2);
+        $itemIds = $topTwoItems->pluck('item_id');
+        $topTwoItemsFromTable = Item::whereIn('id', $itemIds)->get();
+        // @dd($topTwoItemsFromTable);
+        return view('admin.tables.index' , compact('topTwoItemsFromTable'));
 
     }
 

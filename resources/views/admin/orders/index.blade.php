@@ -98,7 +98,21 @@
                                             </td>
                                             <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
                                                 <div class="flex space-x-2">
-
+                                                    {{-- <form
+                                                        class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white"
+                                                        method="POST"
+                                                        action="{{route('admin.orders.done', ['order' => $order->id]) }}"
+                                                        @csrf
+                                                        <button type="submit">Done</button>
+                                                    </form> --}}
+                                                    <form
+                                                    class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white"
+                                                    method="POST"
+                                                    action="{{ route('order.done', $order->id) }}">
+                                                    @csrf
+                                                    {{-- @method('DELETE') --}}
+                                                    <button type="submit">done</button>
+                                                </form>
                                                     <form
                                                         class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white"
                                                         method="POST"
@@ -106,7 +120,7 @@
                                                         onsubmit="return confirm('Are you sure?');">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit">Delete</button>
+                                                        <button type="submit">Cancle</button>
                                                     </form>
                                                 </div>
                                             </td>

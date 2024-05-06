@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ItemStoreRequest;
 use App\Models\Category;
 use App\Models\Item;
+use App\Models\BestSellingItems;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -45,12 +47,16 @@ class ItemController extends Controller
         $category_id = request()->categories[0];
         $image = request()->file('image')->store('public/menus');
 
-        $menu = Item::create([
+        $Item = Item::create([
             'name' => request()->name,
             'description' => request()->description,
             'image' => $image,
             'price' => request()->price,
             'category_id' =>$category_id
+        ]);
+        BestSellingItems::create([
+            'item_id' =>$Item->id,
+            'sales_volume' => 0
         ]);
 
         // if ($request->has('categories')) {

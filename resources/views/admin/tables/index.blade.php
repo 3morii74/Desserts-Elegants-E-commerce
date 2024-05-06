@@ -8,16 +8,11 @@
     <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <!-- Sidebar content -->
-    </div>
+
 
     <!-- Page content -->
     <div class="content">
@@ -36,23 +31,18 @@
                     <h4>Best Selling Products</h4>
                     <div class="card-deck">
                         <!-- Product Card 1 -->
+                        @foreach ($topTwoItemsFromTable as $item)
                         <div class="card">
-                            <img src="product1.jpg" class="card-img-top" alt="Product 1">
+                            <img src="{{ Storage::url($item->image) }}" class="card-img-top" alt="Product 1" style="width: 200px; height: 200px; object-fit: cover;">
                             <div class="card-body">
-                                <h5 class="card-title">Product 1</h5>
-                                <p class="card-text">$XX.XX</p>
+                                <h5 class="card-title">{{$item->name}}</h5>
+                                <p class="card-text">L.E {{$item->price}}</p>
                                 <!-- Add more details if needed -->
                             </div>
                         </div>
-                        <!-- Product Card 2 -->
-                        <div class="card">
-                            <img src="product2.jpg" class="card-img-top" alt="Product 2">
-                            <div class="card-body">
-                                <h5 class="card-title">Product 2</h5>
-                                <p class="card-text">$XX.XX</p>
-                                <!-- Add more details if needed -->
-                            </div>
-                        </div>
+                        @endforeach
+
+
                         <!-- Add more product cards as needed -->
                     </div>
                 </div>
