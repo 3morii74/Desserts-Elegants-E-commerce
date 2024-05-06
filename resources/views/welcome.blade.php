@@ -126,7 +126,7 @@
                         <img class="w-full h-48" src="{{ Storage::url($menu->image) }}" alt="Image" />
                         <div class="px-6 py-4">
                             <h4 class="mb-3 text-xl font-semibold tracking-tight text-green-600 uppercase">
-                                {{ $menu->name }}</h4>
+                                <a href="{{ route('categories.show', $menu->id) }}">{{ $menu->name }}</a></h4>
                             <p class="leading-normal text-gray-700">{{ $menu->description }}.</p>
                         </div>
                     </div>
