@@ -108,7 +108,7 @@
                                                     <form
                                                     class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white"
                                                     method="POST"
-                                                    action="{{ route('admin.orders.done', $order->id) }}">
+                                                    action="{{ route('admin.orders.done', ["id" =>$order->id]) }}">
                                                     @csrf
                                                     {{-- @method('DELETE') --}}
                                                     <button type="submit">done</button>

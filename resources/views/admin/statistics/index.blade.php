@@ -48,7 +48,7 @@
                 </div>
 
             </div>
-            <div class="row">
+            {{-- <div class="row">
                 <div class="col-md-6">
                     <!-- New Users -->
                     <h4>New Users</h4>
@@ -59,7 +59,7 @@
                     <h4>Canceled Orders</h4>
                     <p>5 orders were canceled in the last month.</p>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -73,11 +73,12 @@
     <script src="scripts.js"></script>
     <script>
         // Sample data for orders chart
+
         var ordersChartData = {
-            labels: ["January", "February", "March", "April", "May", "June"],
+            labels: {!! json_encode($labels) !!},
             datasets: [{
                 label: "Number of Orders",
-                data: [65, 59, 80, 81, 56, 55],
+                data: {!! json_encode($data) !!},
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1

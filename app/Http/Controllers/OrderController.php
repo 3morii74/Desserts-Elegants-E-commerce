@@ -5,6 +5,9 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Item;
 use App\Models\BestSellingItems;
+use App\Models\OrderStatistic;
+
+use Carbon\Carbon;
 
 
 
@@ -35,49 +38,44 @@ class OrderController extends Controller
         // @dd($orderItems);
         return view('admin.orders.index', ['orders' => $orders , 'items' => $orderItems]);
     }
-    public function done(Order $order)
+    public function done()
     {
+        $orderId = request()->id;
+        $order = Order::findOrFail($orderId);
+        $orderDate = Carbon::parse($order->created_at);
+
+        OrderStatistic::updateOrCreate(
+            ['year' =>$orderDate->year, 'month' => $orderDate->format('F')], // Search criteria
+            ['order_count' => OrderStatistic::raw('order_count + 1')] // Update or create data
+        );
+
         $items = OrderItem::where('order_id' , $order->id)->delete();
         $order->delete();
 
         return to_route('admin.orders.index')->with('successful', 'order done successfully.');
     }
-    public function indexClint()
+    public function index()
     {
         $userId = auth()->id();
-        // Retrieve all orders
         $orderItems = collect();
 
         $orders = Order::where('user_id', $userId)->get();
 
-        //  @dd($orders);
         foreach ($orders as $order)
         {
             $orderId = $order->id;
-            // $ids = $order->pluck('id');
 
             $items = OrderItem::where('order_id', $orderId)->get();
 
             $orderItems = $orderItems->merge($items);
-            // $orderItems += OrderItem::where('order_id' , $ids)->get();
         }
-
-
-        // @dd($orderItems);
-        // return view('orders.index', ['orders' => $orders , 'items' => $orderItems]);
         return view('order.index',['orders' => $orders , 'items' => $orderItems]);
 
     }
-    public function destoryClint($order)
+    public function destory($order)
     {
-        //1- delete the post from database
-            //select or find the post
-            //delete the post from database
-        // $order = ::find($postId);
-        // @dd($order);
         $items = OrderItem::where('order_id' , $order)->delete();
         Order::where('id' , $order)->delete();
-        //2- redirect to posts.index
         return to_route('order.indexClint');
     }
     public function createAdmin()
