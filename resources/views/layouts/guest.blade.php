@@ -71,9 +71,9 @@
                 <a class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 hover:text-green-400"
                     href="{{ route('Home') }}">Contact Us</a>
                     <a class="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-blue-500 hover:text-green-400"
-                    href="{{ route('Home') }}"><span class="material-symbols-outlined">
+                    href="{{ route('item.show') }}"><span class="material-symbols-outlined">
                         shopping_cart
-                        </span></a>
+                    </span></a>
 
             </div>
         </nav>
