@@ -13,53 +13,29 @@
 </head>
 <body>
 
-
-    <!-- Page content -->
     <div class="content">
-        <!-- Header -->
-
-
-        <!-- Main content area -->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-6">
-                    <!-- Orders Chart -->
                     <canvas id="ordersChart" width="400" height="400"></canvas>
                 </div>
                 <div class="col-md-6">
-                    <!-- Best Selling Products -->
-                    <h4>Best Selling Products</h4>
+                    <h4 class="text-teal-800 font-bold">Best Selling Products</h4>
                     <div class="card-deck">
-                        <!-- Product Card 1 -->
                         @foreach ($topTwoItemsFromTable as $item)
                         <div class="card">
-                            <img src="{{ Storage::url($item->image) }}" class="card-img-top" alt="Product 1" style="width: 200px; height: 200px; object-fit: cover;">
+                            <img src="{{ Storage::url($item->image) }}" class="card-img-top mx-auto mt-6 w-48 h-48 rounded" alt="Product" style="width: 200px; height: 200px; object-fit: cover;">
                             <div class="card-body">
-                                <h5 class="card-title">{{$item->name}}</h5>
-                                <p class="card-text">L.E {{$item->price}}</p>
-                                <!-- Add more details if needed -->
+                                <h5 class="card-title text-teal-800">{{$item->name}}</h5>
+                                <p class="card-text text-teal-800">{{$item->price}} L.E</p>
                             </div>
                         </div>
                         @endforeach
 
-
-                        <!-- Add more product cards as needed -->
                     </div>
                 </div>
 
             </div>
-            {{-- <div class="row">
-                <div class="col-md-6">
-                    <!-- New Users -->
-                    <h4>New Users</h4>
-                    <p>10 new users registered this week.</p>
-                </div>
-                <div class="col-md-6">
-                    <!-- Canceled Orders -->
-                    <h4>Canceled Orders</h4>
-                    <p>5 orders were canceled in the last month.</p>
-                </div>
-            </div> --}}
         </div>
     </div>
 
@@ -79,8 +55,8 @@
             datasets: [{
                 label: "Number of Orders",
                 data: {!! json_encode($data) !!},
-                backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(233 213 255)',
+                borderColor: 'rgba(107 33 168)',
                 borderWidth: 1
             }]
         };

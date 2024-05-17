@@ -8,8 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex m-2 p-2">
-                <a href="{{ route('admin.orders.index') }}"
-                    class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">Orders Index</a>
+                <a href="{{ route('admin.orders.index') }}" class="px-4 py-2 bg-purple-800 hover:bg-purple-500 rounded-lg text-white">Orders Index</a>
             </div>
             <div class="m-2 p-2 bg-slate-100 rounded">
                 <div class="space-y-8 divide-y divide-gray-200 w-1/2 mt-10">
@@ -18,76 +17,70 @@
                         <div class="sm:col-span-6">
                             <label for="name" class="block text-sm font-medium text-gray-700"> Name </label>
                             <div class="mt-1">
-                                <input type="text" id="first_name" name="name"
-                                    class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                <input type="text" id="first_name" name="name" class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                             </div>
                             @error('first_name')
-                                <div class="text-sm text-red-400">{{ $message }}</div>
+                            <div class="text-sm text-red-400">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="sm:col-span-6">
                             <label for="email" class="block text-sm font-medium text-gray-700"> Email </label>
                             <div class="mt-1">
-                                <input type="email" id="email" name="email"
-                                    class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                <input type="email" id="email" name="email" class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                             </div>
                             @error('email')
-                                <div class="text-sm text-red-400">{{ $message }}</div>
+                            <div class="text-sm text-red-400">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="sm:col-span-6">
                             <label for="phone_number" class="block text-sm font-medium text-gray-700"> Phone number
                             </label>
                             <div class="mt-1">
-                                <input type="text" id="tel_number" name="phone_number"
-                                    class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                <input type="text" id="tel_number" name="phone_number" class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                             </div>
                             @error('tel_number')
-                                <div class="text-sm text-red-400">{{ $message }}</div>
+                            <div class="text-sm text-red-400">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="sm:col-span-6">
                             <label for="res_date" class="block text-sm font-medium text-gray-700"> Address
                             </label>
                             <div class="mt-1">
-                                <input type="text" id="res_date" name="address"
-                                    class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                <input type="text" id="res_date" name="address" class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                             </div>
                             @error('res_date')
-                                <div class="text-sm text-red-400">{{ $message }}</div>
+                            <div class="text-sm text-red-400">{{ $message }}</div>
                             @enderror
                         </div>
-{{-- @dd($items); --}}
+                        {{-- @dd($items); --}}
                         <div class="sm:col-span-6 pt-5">
                             <label for="status" class="block text-sm font-medium text-gray-700">Items</label>
                             <div class="mt-1">
                                 <select id="table_id" name="item_id" class="form-multiselect block w-full mt-1">
                                     @foreach ($items as $item)
-                                        <option value="{{ $item->id }}">{{ $item->name }}
-                                            ({{ $item->price }} L.E)
-                                        </option>
+                                    <option value="{{ $item->id }}">{{ $item->name }}
+                                        ({{ $item->price }} L.E)
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
                             @error('table_id')
-                                <div class="text-sm text-red-400">{{ $message }}</div>
+                            <div class="text-sm text-red-400">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="sm:col-span-6">
                             <label for="res_date" class="block text-sm font-medium text-gray-700"> quantity
                             </label>
                             <div class="mt-1">
-                                <input type="text" id="res_date" name="quantity"
-                                    class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
+                                <input type="text" id="res_date" name="quantity" class="block w-full appearance-none bg-white border border-gray-400 rounded-md py-2 px-3 text-base leading-normal transition duration-150 ease-in-out sm:text-sm sm:leading-5" />
                             </div>
                             @error('res_date')
-                                <div class="text-sm text-red-400">{{ $message }}</div>
+                            <div class="text-sm text-red-400">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="mt-6 p-4">
-                            <button type="submit"
-                                class="px-4 py-2 bg-indigo-500 hover:bg-indigo-700 rounded-lg text-white">Store</button>
+                            <button type="submit" class="px-4 py-2 bg-purple-800 hover:bg-purple-500 rounded-lg text-white">Store</button>
                         </div>
                     </form>
                 </div>

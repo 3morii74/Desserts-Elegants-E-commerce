@@ -20,11 +20,11 @@
                                         </th>
                                         <th scope="col"
                                             class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                            phone number
+                                            Phone Number
                                         </th>
                                         <th scope="col"
                                             class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                            address
+                                            Address
                                         </th>
                                         <th scope="col"
                                             class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
@@ -32,7 +32,7 @@
                                         </th>
                                         <th scope="col"
                                             class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
-                                            Order items
+                                            Order Items
                                         </th>
                                         <th scope="col"
                                             class="py-3 px-6 text-xs font-medium tracking-wider text-left text-gray-700 uppercase dark:text-gray-400">
@@ -99,7 +99,7 @@
                                                         onsubmit="return confirm('Are you sure?');">
                                                         @csrf
                                                         @method('DELETE')
-                                                        <button type="submit">Cancle</button>
+                                                        <button type="submit">Cancel</button>
                                                     </form>
                                                 </div>
                                             </td>
