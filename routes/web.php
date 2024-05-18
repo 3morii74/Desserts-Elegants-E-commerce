@@ -31,8 +31,16 @@ Route::middleware(['auth'])->post('/addItem', [CartController::class, 'addToCart
 Route::middleware(['auth'])->get('/cartItem', [CartController::class, 'showCart'])->name('item.show');
 Route::middleware(['auth'])->delete('/deleteItem/{item}', [CartController::class, 'removeFromCart'])->name('item.delete');
 Route::middleware(['auth'])->post('/checkOut', [CartController::class, 'showCheckOut'])->name('item.checkOut');
-Route::middleware(['auth'])->post('/updateCartItem/{id}', [CartController::class, 'updateCartItem'])->name('item.update');
+//Route::middleware(['auth'])->post('/updateCartItem/{id}', [CartController::class, 'updateCartItem'])->name('item.update');
 Route::middleware(['auth'])->post('/placeOrder', [CartController::class, 'store'])->name('order.store');
+Route::middleware(['auth'])->post('/decrementItem/{item}', [CartController::class, 'decrementItem'])->name('item.decrement');
+Route::middleware(['auth'])->post('/incrementItem/{item}', [CartController::class, 'incrementItem'])->name('item.increment');
+
+
+//Route::middleware(['auth'])->patch('/updateCartItem/{itemName}', [CartController::class, 'updateCartItem'])->name('cart.update');
+//Route::middleware(['auth'])->delete('/cart/remove/{item}', [CartController::class, 'removeFromCart'])->name('cart.remove');
+//Route::post('/checkout', [CartController::class, 'showCheckOut'])->name('checkout');
+
 
 
 Route::middleware(['auth'])->get('/myorder', [OrderController::class, 'index'])->name('order.indexClint');

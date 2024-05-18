@@ -25,18 +25,32 @@ class CartController extends Controller
             'quantity' => 'required|integer|min:1',
             'price' => 'required|numeric|min:0',
         ]);
+
         // Retrieve the authenticated user
         $user = Auth::user();
         $menu = Item::findOrFail(request()->menu_id);
 
-        // Create the cart item with the retrieved menu item's name
-        $cartItem = CartItem::create([
-            'user_id' => $user->id,
-            'category_id' => request()->category_id,
-            'quantity' => request()->quantity,
-            'item' => $menu->name, // Use the name of the menu item
-            'price' => $menu->price * request()->quantity, // Calculate the total price
-        ]);
+        // Check if the item already exists in the user's cart
+        $existingCartItem = CartItem::where('user_id', $user->id)
+            ->where('item', $menu->name)
+            ->first();
+
+        if ($existingCartItem) {
+            // If the item exists, increment its quantity and update the price
+            $existingCartItem->quantity += request()->quantity;
+            $existingCartItem->price = $menu->price * $existingCartItem->quantity; // Update the total price
+            $existingCartItem->save();
+        } else {
+            // If the item does not exist, create a new cart item
+            $cartItem = CartItem::create([
+                'user_id' => $user->id,
+                'category_id' => request()->category_id,
+                'quantity' => request()->quantity,
+                'item' => $menu->name, // Use the name of the menu item
+                'price' => $menu->price * request()->quantity, // Calculate the total price
+            ]);
+        }
+
         // Optionally, you can return a response indicating success
         $category = request()->category_id;
         return redirect()->route('categories.show', ['category' => $category]);
@@ -98,25 +112,64 @@ class CartController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateCartItem(Request $request, $id)
+    public function decrementItem($item)
     {
-        // Validate the request data
-        $request->validate([
-            'quantity' => 'required|integer|min:1',
-        ]);
+        $user = Auth::user();
 
-        // Retrieve the cart item
-        $cartItem = CartItem::findOrFail($id);
-
-        // Update the quantity
-        $cartItem->update([
-            'quantity' => $request->quantity,
-            'price' => $request->quantity * $cartItem->price, // Update the price based on the new quantity
-        ]);
-
-        // Optionally, you can return a response indicating success
-        return response()->json(['message' => 'Cart item updated successfully', 'cart_item' => $cartItem]);
+        $cartItem = CartItem::where('user_id', $user->id)
+            ->where('item', $item)
+            ->get();
+        foreach ($cartItem as $cartItem) {
+            $originalAttributes = $cartItem->getOriginal();
+        }
+        //  dd($originalAttributes['quantity']);
+        if ($originalAttributes['quantity'] > 0) {
+            $cartItem->update([
+                'quantity' =>  $originalAttributes['quantity'] - 1,
+                'price' => ($originalAttributes['quantity']) * $cartItem->price, // Update the price based on the new quantity
+            ]);
+        }
+        return redirect()->route('item.show');
     }
+
+    public function incrementItem($item)
+    {
+        $user = Auth::user();
+
+        $cartItem = CartItem::where('user_id', $user->id)
+            ->where('item', $item)
+            ->get();
+        foreach ($cartItem as $cartItem) {
+            $originalAttributes = $cartItem->getOriginal();
+        }
+        //  dd($originalAttributes['quantity']);
+        if ($originalAttributes['quantity'] < 10) {
+            $cartItem->update([
+                'quantity' =>  $originalAttributes['quantity'] + 1,
+                'price' => ($originalAttributes['quantity']) * $cartItem->price, // Update the price based on the new quantity
+            ]);
+        }
+        return redirect()->route('item.show');
+    }
+    // public function updateCartItem(Request $request, $id)
+    // {
+    //     // Validate the request data
+    //     $request->validate([
+    //         'quantity' => 'required|integer|min:1',
+    //     ]);
+
+    //     // Retrieve the cart item
+    //     $cartItem = CartItem::findOrFail($id);
+
+    //     // Update the quantity
+    //     $cartItem->update([
+    //         'quantity' => $request->quantity,
+    //         'price' => $request->quantity * $cartItem->price, // Update the price based on the new quantity
+    //     ]);
+
+    //     // Optionally, you can return a response indicating success
+    //     return response()->json(['message' => 'Cart item updated successfully', 'cart_item' => $cartItem]);
+    // }
 
     /**
      * Remove an item from the cart.
@@ -176,6 +229,7 @@ class CartController extends Controller
             ]);
         }
         CartItem::where('user_id', $user->id)->delete();
+
         return redirect()->route('Home');
     }
 }
