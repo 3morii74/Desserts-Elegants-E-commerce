@@ -95,7 +95,7 @@
                                                     {{-- @method('DELETE') --}}
                                                     <button type="submit">Done</button>
                                                 </form>
-                                                <form class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white" method="POST" action="{{ route('admin.orders.destroy', $order->id) }}" onsubmit="return confirm('Are you sure?');">
+                                                <form class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white" method="POST" action="{{ route('admin.orders.destroy', ["id"=>$order->id]) }}" onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit">Cancel</button>

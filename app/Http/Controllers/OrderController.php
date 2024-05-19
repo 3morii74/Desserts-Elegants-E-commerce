@@ -119,9 +119,10 @@ class OrderController extends Controller
 
     public function destroyAdmin(Order $order)
     {
+        // @dd(Request()->id);
+        $order = Order::find(Request()->id);
         $items = OrderItem::where('order_id' , $order->id)->delete();
         $order->delete();
-
-        return to_route('admin.orders.index')->with('danger', 'Category deleted successfully.');
+        return to_route('admin.orders.index')->with('danger', 'Order deleted successfully.');
     }
 }
