@@ -9,7 +9,8 @@ use App\Models\OrderStatistic;
 
 use Carbon\Carbon;
 
-
+use App\Mail\OrderDone;
+use Illuminate\Support\Facades\Mail;
 
 
 use Illuminate\Http\Request;
@@ -22,14 +23,13 @@ class OrderController extends Controller
         $orderItems = collect();
 
         $orders = Order::all();
-
         foreach ($orders as $order)
         {
+            $total = 0;
             $orderId = $order->id;
-            // $ids = $order->pluck('id');
 
             $items = OrderItem::where('order_id', $orderId)->get();
-
+            
             $orderItems = $orderItems->merge($items);
             // $orderItems += OrderItem::where('order_id' , $ids)->get();
         }
@@ -38,12 +38,16 @@ class OrderController extends Controller
         // @dd($orderItems);
         return view('admin.orders.index', ['orders' => $orders , 'items' => $orderItems]);
     }
+
+
+
     public function done()
     {
         $orderId = request()->id;
         $order = Order::findOrFail($orderId);
         $orderDate = Carbon::parse($order->created_at);
-
+        Mail::to($order->email)->send(new OrderDone($order));
+        // @dd();
         OrderStatistic::updateOrCreate(
             ['year' =>$orderDate->year, 'month' => $orderDate->format('F')], // Search criteria
             ['order_count' => OrderStatistic::raw('order_count + 1')] // Update or create data
@@ -54,6 +58,8 @@ class OrderController extends Controller
 
         return to_route('admin.orders.index')->with('successful', 'order done successfully.');
     }
+
+
     public function index()
     {
         $userId = auth()->id();
@@ -117,7 +123,7 @@ class OrderController extends Controller
         return to_route('admin.orders.index')->with('success', 'Category created successfully.');
     }
 
-    public function destroyAdmin(Order $order)
+    public function destroyAdmin()
     {
         // @dd(Request()->id);
         $order = Order::find(Request()->id);

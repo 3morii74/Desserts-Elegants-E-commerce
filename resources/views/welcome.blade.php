@@ -56,5 +56,12 @@
                 </div>
             </div>
         </div>
+
+        <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-radius: 10px; width: 100%; box-sizing: border-box; text-align: center; font-family: Arial, sans-serif;">
+            <p style="color: #333; font-size: 14px; margin-bottom: 20px;">Click the button below to register notifications when a new item is added</p>
+            <button style="background-color: #115e59; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 12px;">
+                Turn Notifications On
+            </button>
+        </div>
     </section>
 </x-guest-layout>

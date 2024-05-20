@@ -118,17 +118,16 @@ class CartController extends Controller
 
         $cartItem = CartItem::where('user_id', $user->id)
             ->where('item', $item)
-            ->get();
-        foreach ($cartItem as $cartItem) {
-            $originalAttributes = $cartItem->getOriginal();
-        }
-        //  dd($originalAttributes['quantity']);
-        if ($originalAttributes['quantity'] > 0) {
-            $cartItem->update([
-                'quantity' =>  $originalAttributes['quantity'] - 1,
-                'price' => ($originalAttributes['quantity']) * $cartItem->price, // Update the price based on the new quantity
-            ]);
-        }
+            ->first();
+
+
+        $itemObject = Item::where('name', $item)->first();
+
+        $cartItem->update([
+            'quantity' =>  $cartItem->quantity - 1,
+            'price' => $cartItem->price - $itemObject->price, // Update the price based on the new quantity
+        ]);
+
         return redirect()->route('item.show');
     }
 
@@ -138,38 +137,18 @@ class CartController extends Controller
 
         $cartItem = CartItem::where('user_id', $user->id)
             ->where('item', $item)
-            ->get();
-        foreach ($cartItem as $cartItem) {
-            $originalAttributes = $cartItem->getOriginal();
-        }
-        //  dd($originalAttributes['quantity']);
-        if ($originalAttributes['quantity'] < 10) {
-            $cartItem->update([
-                'quantity' =>  $originalAttributes['quantity'] + 1,
-                'price' => ($originalAttributes['quantity']) * $cartItem->price, // Update the price based on the new quantity
-            ]);
-        }
+            ->first();
+
+        $itemObject = Item::where('name', $item)->first();
+
+        $cartItem->update([
+            'quantity' =>  $cartItem->quantity + 1,
+            'price' => $cartItem->price + $itemObject->price, // Update the price based on the new quantity
+        ]);
+
         return redirect()->route('item.show');
     }
-    // public function updateCartItem(Request $request, $id)
-    // {
-    //     // Validate the request data
-    //     $request->validate([
-    //         'quantity' => 'required|integer|min:1',
-    //     ]);
 
-    //     // Retrieve the cart item
-    //     $cartItem = CartItem::findOrFail($id);
-
-    //     // Update the quantity
-    //     $cartItem->update([
-    //         'quantity' => $request->quantity,
-    //         'price' => $request->quantity * $cartItem->price, // Update the price based on the new quantity
-    //     ]);
-
-    //     // Optionally, you can return a response indicating success
-    //     return response()->json(['message' => 'Cart item updated successfully', 'cart_item' => $cartItem]);
-    // }
 
     /**
      * Remove an item from the cart.

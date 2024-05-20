@@ -78,7 +78,7 @@
                                             @endphp
 
                                             @foreach ($allItems as $item)
-                                            - {{ $item->product_name }} ({{$item->quantity}}) <br>
+                                            - {{ $item->product_name }} ({{$item->quantity}}) : {{(int)$item->price}} L.E <br>
                                             @endforeach
                                         </td>
                                         <td class="py-4 px-6 text-sm font-medium text-right whitespace-nowrap">
