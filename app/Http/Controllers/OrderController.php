@@ -29,7 +29,7 @@ class OrderController extends Controller
             $orderId = $order->id;
 
             $items = OrderItem::where('order_id', $orderId)->get();
-            
+
             $orderItems = $orderItems->merge($items);
             // $orderItems += OrderItem::where('order_id' , $ids)->get();
         }
@@ -97,7 +97,10 @@ class OrderController extends Controller
         $item_id = request()->item_id;
 
         $item = Item::find($item_id);
-
+        if(request()->email == Null || request()->phone_number == Null || request()->name == null || request()->address == Null )
+        {
+            return Redirect()->back()->with('danger', 'Fill all felids ');
+        }
         // @dd($item);
         $order = Order::create([
             'user_id' => 1,

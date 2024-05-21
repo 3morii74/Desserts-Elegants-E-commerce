@@ -1,7 +1,17 @@
 <link href="{{ mix('css/app.css') }}" rel="stylesheet">
+
 <div style="background-image: url('/images/bg-form.jpeg'); background-size: cover; background-repeat: no-repeat;">
     <section class="form-container">
         <div class="w-full flex flex-col items-center justify-center px-10  py-8 mx-auto md:h-screen lg:py-0">
+            @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
             <div class="w-full bg-purple-50 rounded-lg px-10 shadow-md dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-l text-center font-bold leading-tight tracking-tight text-teal-800 md:text-xl dark:text-white uppercase">

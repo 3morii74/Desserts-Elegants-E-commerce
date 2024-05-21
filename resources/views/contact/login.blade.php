@@ -1,7 +1,18 @@
 <link href="{{ mix('css/app.css') }}" rel="stylesheet">
 <div style="background-image: url('/images/bg-form.jpeg'); background-size: cover; background-repeat: no-repeat;">
     <section class="form-container">
+
         <div class="w-full flex flex-col items-center justify-center px-10 py-8 mx-auto my-auto md:h-screen lg:py-0">
+            @if(session('danger'))
+            <div id="dengerMessage" style="background-color: rgb(248, 119, 119); color: #c3e6cb; border-color: #c3e6cb; padding: 0.75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: 0.25rem;">
+                {{ session('danger') }}
+            </div><script>
+                // Hide the success message after 5 seconds
+                setTimeout(function() {
+                    document.getElementById('dengerMessage').style.display = 'none';
+                }, 4000);
+            </script>
+        @endif
             <div class="w-full bg-purple-50 rounded-lg px-10  shadow-md dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <h1 class="text-l text-center font-bold leading-tight tracking-tight text-teal-800 md:text-xl dark:text-white uppercase">

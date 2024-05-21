@@ -23,6 +23,6 @@ class LoginController extends Controller
         if (Auth::attempt($credentials)) {
             return redirect()->route('Home');
         }
-        return "<h2>Username or Password Invalid!</h2>";
+        return redirect()->back()->with('danger', 'Username or Password Invalid!');//"<h2>Username or Password Invalid!</h2>";
     }
 }

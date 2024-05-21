@@ -33,6 +33,7 @@ class ItemController extends Controller
     {
         $category_id = request()->categories[0];
         $image = request()->file('image')->store('public/menus');
+
         $Item = Item::create([
             'name' => request()->name,
             'description' => request()->description,
@@ -64,6 +65,11 @@ class ItemController extends Controller
         if ($request->hasFile('image')) {
             Storage::delete($item->image);
             $image = $request->file('image')->store('public/menus');
+        }
+        // @dd($request->categories[0]);
+        if($request->name == Null || $request->description == Null || $image == null || $request->price == Null || $request->categories == Null)
+        {
+            return Redirect()->back()->with('danger', 'Fill all felids ');
         }
         $single = $request->categories[0];
         $item->update([
