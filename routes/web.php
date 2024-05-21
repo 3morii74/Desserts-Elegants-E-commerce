@@ -13,6 +13,9 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CartController;
 
+use App\Http\Controllers\NotificationSubscriptionController;
+
+
 
 
 Route::get('/', [WelcomeController::class, 'index'])->name('Home'); //done
@@ -46,8 +49,9 @@ Route::middleware(['auth'])->post('/incrementItem/{item}', [CartController::clas
 Route::middleware(['auth'])->get('/myorder', [OrderController::class, 'index'])->name('order.indexClint');
 Route::middleware(['auth'])->delete('/myorder/{order}', [OrderController::class, 'destory'])->name('order.destoryClint');
 
-
-
+Route::middleware(['auth'])->get('/subscribe', [NotificationSubscriptionController::class, 'subscribe'])->name('subscribe');
+Route::middleware(['auth', 'admin'])->get('/notify/{item}', [NotificationSubscriptionController::class, 'notify'])->name('notify');
+Route::middleware(['auth'])->get('/unsubscribe', [NotificationSubscriptionController::class, 'unsubscribe'])->name('unsubscribe');
 Route::middleware(['auth', 'admin'])->get('/admin', [AdminController::class, 'index'])->name('admin.index');
 
 Route::middleware(['auth', 'admin'])->get('/admin/categories', [CategoryController::class, 'indexAdmin'])->name('admin.categories.index');

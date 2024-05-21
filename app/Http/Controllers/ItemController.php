@@ -45,7 +45,7 @@ class ItemController extends Controller
             'sales_volume' => 0
         ]);
 
-        return to_route('admin.items.index')->with('success', 'Item created successfully.');
+        return redirect()->route('notify', ['item' => $Item->id]);
     }
 
     public function editAdmin()
@@ -84,3 +84,4 @@ class ItemController extends Controller
         return to_route('admin.items.index')->with('danger', 'Item deleted successfully.');
     }
 }
+//

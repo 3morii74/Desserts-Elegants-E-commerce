@@ -1,6 +1,15 @@
 <x-guest-layout>
     <!-- Main Hero Content -->
-
+    @if(session('success'))
+    <div id="successMessage" style="background-color: #d4edda; color: #155724; border-color: #c3e6cb; padding: 0.75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: 0.25rem;">
+        {{ session('success') }}
+    </div><script>
+        // Hide the success message after 5 seconds
+        setTimeout(function() {
+            document.getElementById('successMessage').style.display = 'none';
+        }, 1000);
+    </script>
+@endif
     <div class="container text-center mb-5 max-w-lg px-4 py-60 mx-auto bg-center bg-no-repeat bg-cover md:max-w-none md:text-center" style="background-image: url('/images/marshmallow.jpeg');">
         <div class="mx-auto text-white mt-2 md:text-center lg:text-lg cookie-regular">
             satisfy your sweet cravings with our delicious delights
@@ -59,9 +68,16 @@
 
         <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-radius: 10px; width: 100%; box-sizing: border-box; text-align: center; font-family: Arial, sans-serif;">
             <p style="color: #333; font-size: 14px; margin-bottom: 20px;">Click the button below to register notifications when a new item is added</p>
-            <button style="background-color: #115e59; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 12px;">
-                Turn Notifications On
-            </button>
+            @if ($isSubscipe == 0)
+
+                <button style="background-color: #115e59; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 12px;">
+                    <a href="{{route('subscribe')}}">Turn Notifications On
+                    </button>
+            @elseif ($isSubscipe == 1)
+            <button style="background-color: #03e4d5; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 12px;">
+                <a href="{{route('unsubscribe')}}">Turn Notifications off
+                </button>
+            @endif
         </div>
     </section>
 </x-guest-layout>
