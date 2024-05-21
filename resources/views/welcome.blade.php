@@ -7,7 +7,7 @@
         // Hide the success message after 5 seconds
         setTimeout(function() {
             document.getElementById('successMessage').style.display = 'none';
-        }, 1000);
+        }, 2000);
     </script>
 @endif
     <div class="container text-center mb-5 max-w-lg px-4 py-60 mx-auto bg-center bg-no-repeat bg-cover md:max-w-none md:text-center" style="background-image: url('/images/marshmallow.jpeg');">
@@ -66,17 +66,17 @@
             </div>
         </div>
 
-        <div style="background-color: #f9f9f9; border: 1px solid #ddd; padding: 20px; border-radius: 10px; width: 100%; box-sizing: border-box; text-align: center; font-family: Arial, sans-serif;">
-            <p style="color: #333; font-size: 14px; margin-bottom: 20px;">Click the button below to register notifications when a new item is added</p>
+        <div class="bg-purple-50 text-teal-800" style="padding: 20px; border-radius: 10px; width: 100%; box-sizing: border-box; text-align: center; font-family: Arial, sans-serif;">
+            <p style="font-size: 14px; margin-bottom: 20px;">Click the button below to receive notifications when a new item is added</p>
             @if ($isSubscipe == 0)
 
-                <button style="background-color: #115e59; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 12px;">
-                    <a href="{{route('subscribe')}}">Turn Notifications On
-                    </button>
+            <a href="{{route('subscribe')}}"><button class="py-2 text-center text-purple-50 bg-teal-800 rounded-md shadow hover:bg-teal-600" style="padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 12px;">
+                    Turn Notifications On
+                    </button></a>
             @elseif ($isSubscipe == 1)
-            <button style="background-color: #03e4d5; color: white; padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 12px;">
-                <a href="{{route('unsubscribe')}}">Turn Notifications off
-                </button>
+            <a href="{{route('unsubscribe')}}"><button class="py-2 text-center bg-purple-300 text-teal-800 rounded-md shadow hover:bg-teal-600 hover:text-purple-50" style="padding: 15px 32px; text-align: center; text-decoration: none; display: inline-block; font-size: 16px; margin: 4px 2px; cursor: pointer; border: none; border-radius: 12px;">
+                Turn Notifications Off
+                </button></a>
             @endif
         </div>
     </section>

@@ -584,7 +584,7 @@ select {
   content: '';
   display: block;
   top: 50%;
-  transform: translateY(-50%); 
+  transform: translateY(-50%);
   right: 0;
   height: 0.3rem;
   width: 35%;
@@ -1482,17 +1482,17 @@ select {
   color:rgb(17 94 89);;
 }
 
-.text-teal-600{	
-  --tw-text-opacity: 1; 
+.text-teal-600{
+  --tw-text-opacity: 1;
   color: rgb(13 148 136 / var(--tw-text-opacity));
 }
 
-.text-teal-500{	
-  --tw-text-opacity: 1; 
+.text-teal-500{
+  --tw-text-opacity: 1;
   color: rgb(20 184 166 / var(--tw-text-opacity));
 }
-.text-teal-400{	
-  --tw-text-opacity: 1; 
+.text-teal-400{
+  --tw-text-opacity: 1;
   color: rgb(45 212 191 / var(--tw-text-opacity));
 }
 
@@ -1577,7 +1577,7 @@ select {
   --tw-text-opacity: 1;
   color: rgb(168 85 247/ var(--tw-text-opacity));
 }
-.text-purple-800	
+.text-purple-800
 {
   --tw-text-opacity: 1;
   color: rgb(107 33 168/ var(--tw-text-opacity));
@@ -1728,16 +1728,19 @@ select {
 .navtransition a:hover {
   transform: scale(1.2);
 }
-.hover\:bg-teal-600:hover {	
+.hover\:bg-teal-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(13 148 136 / var(--tw-bg-opacity));
 }
 
-.hover\:bg-purple-500:hover {	
+.hover\:bg-purple-500:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(168 85 247 / var(--tw-bg-opacity));
 }
-
+.hover\:text-purple-50:hover {
+    --tw-text-opacity: 1;
+    color: rgb(250 245 255 / var(--tw-text-opacity));
+  }
 .hover\:text-gray-500:hover {
   --tw-text-opacity: 1;
   color: rgb(107 114 128 / var(--tw-text-opacity));
@@ -1764,13 +1767,13 @@ select {
   color: rgb(168 85 247 / var(--tw-text-opacity));
 }
 
-.hover\:text-teal-600:hover {	
-  --tw-text-opacity: 1; 
+.hover\:text-teal-600:hover {
+  --tw-text-opacity: 1;
   color: rgb(13 148 136 / var(--tw-text-opacity));
 }
 
-.hover\:text-teal-500:hover {	
-  --tw-text-opacity: 1; 
+.hover\:text-teal-500:hover {
+  --tw-text-opacity: 1;
   color: rgb(20 184 166 / var(--tw-text-opacity));
 }
 
@@ -2012,12 +2015,12 @@ select {
 }
 
 @media (min-width: 100px) {
-  
+
   .text-2xl{
     font-size: 0.75rem;
 
   }
-  
+
   .lg\:text-lg {
     font-size: 1.5rem;
     line-height: 1.5rem;
@@ -2035,7 +2038,7 @@ select {
     font-size: 1.2rem;
 
   }
- 
+
   .sm\:col-span-6 {
     grid-column: span 6 / span 6;
   }
@@ -2284,8 +2287,8 @@ select {
     font-size: 1.80rem;
     line-height: 1.5rem;
   }
-  
-  
+
+
 }
 @media (min-width: 1024px) {
 
@@ -2318,7 +2321,7 @@ select {
     width: 100%;
   }
 
-  
+
   .lg\:w-1\/2 {
     width: 50%;
   }
@@ -2391,7 +2394,7 @@ select {
   }
   .text-xl{
     font-size: 1.8rem;
-  } 
+  }
 
   .xl\:mb-6 {
     margin-bottom: 1.5rem;

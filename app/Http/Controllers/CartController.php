@@ -146,7 +146,7 @@ class CartController extends Controller
             'price' => $cartItem->price + $itemObject->price, // Update the price based on the new quantity
         ]);
 
-        return redirect()->route('item.show');
+        return redirect()->back();
     }
 
 
