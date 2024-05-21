@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Mail;
 
 class NewItemCreated extends Mailable
 {
@@ -19,11 +20,15 @@ class NewItemCreated extends Mailable
      *
      * @return void
      */
-    public function __construct(Item $item)
+    public function __construct(Item $item, $email)
     {
         $this->item = $item;
+        $this->sendEmail($email);
     }
-
+    protected function sendEmail($email)
+    {
+        Mail::to($email)->send($this);
+    }
     public function build()
     {
         return $this->subject('New Item Created')

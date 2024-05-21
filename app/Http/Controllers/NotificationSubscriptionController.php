@@ -40,7 +40,7 @@ class NotificationSubscriptionController extends Controller
             $email =User::where('id',$user->user_id)->first();
             $email = $email->email;
             // @dd($email);
-            Mail::to($email)->send(new NewItemCreated($item));
+            new NewItemCreated($item , $email);
         }
         return to_route('admin.items.index')->with('success', 'Item created successfully.');
     }
