@@ -35,18 +35,18 @@
                                     @foreach ($Items as $Item)
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ $Item->name }}
+                                            {{ $Item->getItem()['name'] }}
                                         </td>
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img src="{{ Storage::url($Item->image) }}" class="w-16 h-16 rounded">
+                                            <img src="{{ Storage::url($Item->getItem()['image']) }}" class="w-16 h-16 rounded">
                                         </td>
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ $Item->price }}
+                                            {{ $Item->getItem()['price'] }}
                                         </td>
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <div class="flex space-x-2">
-                                                <a href="{{ route('admin.items.edit', ["id"=>$Item->id]) }}" class="px-4 py-2 bg-teal-800 hover:bg-teal-600 rounded-lg  text-white">Edit</a>
-                                                <form class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white" method="POST" action="{{ route('admin.items.destroy', ["id"=> $Item->id]) }}" onsubmit="return confirm('Are you sure?');">
+                                                <a href="{{ route('admin.items.edit', ["id"=>$Item->getItem()['id']]) }}" class="px-4 py-2 bg-teal-800 hover:bg-teal-600 rounded-lg  text-white">Edit</a>
+                                                <form class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white" method="POST" action="{{ route('admin.items.destroy', ["id"=> $Item->getItem()['id']]) }}" onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit">Delete</button>

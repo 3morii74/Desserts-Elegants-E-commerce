@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Objects\ItemObject;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ItemStoreRequest;
 use App\Models\Category;
@@ -13,15 +13,19 @@ use Illuminate\Support\Facades\Storage;
 
 class ItemController extends Controller
 {
-    public function index()
-    {
-        $menus = Item::all();
+    private $itemObjects = [];
 
-        return view('menus.index', compact('menus'));
+    public function getAllItems()
+    {
+        $items = Item::all();
+        foreach ($items as $item) {
+         $this->itemObjects[] = new ItemObject($item);
+        }
+        return $this->itemObjects;
     }
     public function indexAdmin()
     {
-        $Items = Item::all();
+        $Items = $this->getAllItems();
         return view('admin.items.index', compact('Items'));
     }
     public function createAdmin()
@@ -33,7 +37,6 @@ class ItemController extends Controller
     {
         $category_id = request()->categories[0];
         $image = request()->file('image')->store('public/menus');
-
         $Item = Item::create([
             'name' => request()->name,
             'description' => request()->description,
@@ -45,6 +48,8 @@ class ItemController extends Controller
             'item_id' =>$Item->id,
             'sales_volume' => 0
         ]);
+        $this->itemObjects[] = new ItemObject($Item);
+
 
         return redirect()->route('notify', ['item' => $Item->id]);
     }
@@ -52,34 +57,53 @@ class ItemController extends Controller
     public function editAdmin()
     {
         $itemId =request()->id;
-        $item = Item::findOrFail($itemId);
+        // $item = Item::findOrFail($itemId);
+        $Items = $this->getAllItems();
         $categories = Category::all();
-        return view('admin.items.edit', compact('item', 'categories'));
+        foreach($Items as $Item)
+        {
+            if($Item->getId() == $itemId)
+            {
+                return view('admin.items.edit', compact('Item', 'categories'));
+
+            }
+        }
+        return Redirect()->back()->with('danger' , 'Item is not found');
     }
     public function updateAdmin()
     {
         $request = request();
         $itemId =request()->id;
-        $item = Item::findOrFail($itemId);
-        $image = $item->image;
-        if ($request->hasFile('image')) {
-            Storage::delete($item->image);
-            $image = $request->file('image')->store('public/menus');
+        $single = $request->categories[0];
+        $image = NULL;
+        if ($request->hasFile('image')){
+            $image =$request->file('image')->store('public/menus');
         }
-        // @dd($request->categories[0]);
-        if($request->name == Null || $request->description == Null || $image == null || $request->price == Null || $request->categories == Null)
+
+        if($request->name == Null || $request->description == Null ||  $request->price == Null || $request->categories == Null)
         {
             return Redirect()->back()->with('danger', 'Fill all felids ');
         }
-        $single = $request->categories[0];
-        $item->update([
-            'name' => $request->name,
-            'description' => $request->description,
-            'image' => $image,
-            'price' => $request->price,
-            'category_id' =>$single
-        ]);
-        return to_route('admin.items.index')->with('success', 'Item updated successfully.');
+
+
+        $Items = $this->getAllItems();
+        foreach($Items as $Item)
+        {
+            if($Item->getId() == $itemId)
+            {
+                $isSucc = $Item->updateItem($request->name , $request->description , $request->price , $single , $image);
+                if($isSucc)
+                {
+                    return to_route('admin.items.index')->with('success', 'Item updated successfully.');
+
+                }else{
+                    break;
+                }
+            }
+        }
+
+        return Redirect()->back()->with('danger', 'no items found');
+
     }
     public function destroyAdmin()
     {
