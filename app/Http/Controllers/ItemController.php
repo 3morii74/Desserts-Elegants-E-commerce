@@ -7,7 +7,7 @@ use App\Http\Requests\ItemStoreRequest;
 use App\Models\Category;
 use App\Models\Item;
 use App\Models\BestSellingItems;
-
+use App\Http\Controllers\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -30,7 +30,8 @@ class ItemController extends Controller
     }
     public function createAdmin()
     {
-        $categories = Category::all();
+        $CategoryController = new CategoryController;
+        $categories = $CategoryController->getallCategory();
         return view('admin.items.create', compact('categories'));
     }
     public function storeAdmin()
@@ -59,7 +60,8 @@ class ItemController extends Controller
         $itemId =request()->id;
         // $item = Item::findOrFail($itemId);
         $Items = $this->getAllItems();
-        $categories = Category::all();
+        $CategoryController = new CategoryController;
+        $categories = $CategoryController->getallCategory();
         foreach($Items as $Item)
         {
             if($Item->getId() == $itemId)

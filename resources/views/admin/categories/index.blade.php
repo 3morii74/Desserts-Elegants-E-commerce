@@ -35,18 +35,18 @@
                                     @foreach ($categories as $category)
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ $category->name }}
+                                            {{ $category->getCategory()['name'] }}
                                         </td>
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <img src="{{ Storage::url($category->image) }}" class="w-16 h-16 rounded">
+                                            <img src="{{ Storage::url($category->getCategory()['image']) }}" class="w-16 h-16 rounded">
                                         </td>
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ $category->description }}
+                                            {{ $category->getCategory()['description'] }}
                                         </td>
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                             <div class="flex space-x-2">
-                                                <a href="{{ route('admin.categories.edit', ["id" => $category->id]) }}" class="px-4 py-2 bg-teal-800 hover:bg-teal-600 rounded-lg  text-white">Edit</a>
-                                                <form class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white" method="POST" action="{{ route('admin.categories.destroy', ["id" => $category->id]) }}" onsubmit="return confirm('Are you sure?');">
+                                                <a href="{{ route('admin.categories.edit', ["id" => $category->getCategory()['id']]) }}" class="px-4 py-2 bg-teal-800 hover:bg-teal-600 rounded-lg  text-white">Edit</a>
+                                                <form class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white" method="POST" action="{{ route('admin.categories.destroy', ["id" => $category->getCategory()['id']]) }}" onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit">Delete</button>
