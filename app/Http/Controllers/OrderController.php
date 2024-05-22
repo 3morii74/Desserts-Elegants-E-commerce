@@ -6,6 +6,8 @@ use App\Models\OrderItem;
 use App\Models\Item;
 use App\Models\BestSellingItems;
 use App\Models\OrderStatistic;
+use App\Http\Objects\OrderObject;
+use App\Http\Objects\OrderItemObject;
 
 use Carbon\Carbon;
 
@@ -17,25 +19,41 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    public function indexAdmin()
+    private $orderObjects = [];
+    private $orderItemsObjects = [];
+
+
+    public function getAllOrders()
     {
-        // Retrieve all orders
-        $orderItems = collect();
 
         $orders = Order::all();
-        foreach ($orders as $order)
-        {
-            $total = 0;
-            $orderId = $order->id;
-
-            $items = OrderItem::where('order_id', $orderId)->get();
-
-            $orderItems = $orderItems->merge($items);
-            // $orderItems += OrderItem::where('order_id' , $ids)->get();
+        foreach ($orders as $order) {
+         $this->orderObjects[] = new OrderObject($order);
         }
+        return $this->orderObjects;
+    }
+    public function getAllOrderItems()
+    {
+        $orderItems = collect();
+        $Items = [];
+        $orders = Order::all();
+        foreach ($orders as $order) {
+         $items = OrderItem::where('order_id', $order->id)->get();
+         $orderItems = $orderItems->merge($items);
 
+        }
+        foreach($orderItems as $item)
+        {
+            $orderItemsObjects[] =new OrderItemObject($item);
+        }
+        return $this->orderItemsObjects;
+    }
 
-        // @dd($orderItems);
+    public function indexAdmin()
+    {
+
+        $orders = $this->getAllOrders();
+        $orderItems = $this->getAllOrderItems();
         return view('admin.orders.index', ['orders' => $orders , 'items' => $orderItems]);
     }
 
@@ -44,10 +62,16 @@ class OrderController extends Controller
     public function done()
     {
         $orderId = request()->id;
+        $orders = $this->getAllOrders();
+        foreach($orders as $order) {
+            if($order->getId() == $orderId)
+            {
+                $order->DoneOrder();
+            }
+        }
+
         $order = Order::findOrFail($orderId);
         $orderDate = Carbon::parse($order->created_at);
-        Mail::to($order->email)->send(new OrderDone($order));
-        // @dd();
         OrderStatistic::updateOrCreate(
             ['year' =>$orderDate->year, 'month' => $orderDate->format('F')], // Search criteria
             ['order_count' => OrderStatistic::raw('order_count + 1')] // Update or create data
@@ -123,7 +147,7 @@ class OrderController extends Controller
         $selling->sales_volume+= request()->quantity;
         $selling->save();
 
-        return to_route('admin.orders.index')->with('success', 'Category created successfully.');
+        return to_route('admin.orders.index')->with('success', 'Order created successfully.');
     }
 
     public function destroyAdmin()

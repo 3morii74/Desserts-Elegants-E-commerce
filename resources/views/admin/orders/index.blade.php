@@ -49,28 +49,28 @@
                                     @foreach ($orders as $order)
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                         <td class="py-4 px-6 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{ $order->id }}
+                                            {{ $order->getOrder()['id'] }}
                                         </td>
                                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                            {{ $order->name  }}
+                                            {{ $order->getOrder()['name']  }}
                                         </td>
                                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                            {{ $order->email }}
+                                            {{ $order->getOrder()['email'] }}
                                         </td>
                                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                            {{ $order->phone_number }}
+                                            {{ $order->getOrder()['phone_number'] }}
                                         </td>
                                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                            {{ $order->address }}
+                                            {{ $order->getOrder()['address'] }}
                                         </td>
                                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
-                                            {{ $order->created_at }}
+                                            {{ $order->getOrder()['created_at'] }}
                                         </td>
                                         <td class="py-4 px-6 text-sm text-gray-500 whitespace-nowrap dark:text-gray-400">
                                             @php
                                             $allItems = collect();
                                             foreach ($items as $item) {
-                                            if ($item->order_id == $order->id) {
+                                            if ($item->getId() == $order->getId()) {
                                             $allItems = $allItems->merge([$item]);
                                             }
                                             }
@@ -86,16 +86,16 @@
                                                 {{-- <form
                                                         class="px-4 py-2 bg-green-500 hover:bg-green-700 rounded-lg text-white"
                                                         method="POST"
-                                                        action="{{route('admin.orders.done', ['order' => $order->id]) }}"
+                                                        action="{{route('admin.orders.done', ['order' => $order->getOrder()['name']id]) }}"
                                                 @csrf
                                                 <button type="submit">Done</button>
                                                 </form> --}}
-                                                <form class="px-4 py-2 bg-teal-800 hover:bg-teal-600 rounded-lg text-white" method="POST" action="{{ route('admin.orders.done', ["id" =>$order->id]) }}">
+                                                <form class="px-4 py-2 bg-teal-800 hover:bg-teal-600 rounded-lg text-white" method="POST" action="{{ route('admin.orders.done', ["id" =>$order->getOrder()['id']]) }}">
                                                     @csrf
                                                     {{-- @method('DELETE') --}}
                                                     <button type="submit">Done</button>
                                                 </form>
-                                                <form class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white" method="POST" action="{{ route('admin.orders.destroy', ["id"=>$order->id]) }}" onsubmit="return confirm('Are you sure?');">
+                                                <form class="px-4 py-2 bg-red-500 hover:bg-red-700 rounded-lg text-white" method="POST" action="{{ route('admin.orders.destroy', ["id"=>$order->getOrder()['id']]) }}" onsubmit="return confirm('Are you sure?');">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit">Cancel</button>

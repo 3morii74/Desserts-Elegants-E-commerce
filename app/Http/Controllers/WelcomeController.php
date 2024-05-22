@@ -7,7 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\NotificationSubscription;
 use App\Http\Controllers\ItemController;
-
+use App\Http\Controllers\AdminStaticPageController;
 class WelcomeController extends Controller
 {
     public function index()
@@ -21,11 +21,10 @@ class WelcomeController extends Controller
         if($user)
         {
             $isSubscipe = NotificationSubscription::where('user_id', $user->id)->first()  == Null? 0 : 1 ;
-
-
         }
-
-        return view('welcome', compact('specials' , 'isSubscipe'));
+        $staticPage = new AdminStaticPageController;
+        $topTwoItemsFromTable = $staticPage->BestSelling();
+        return view('welcome', compact('specials' , 'isSubscipe' , 'topTwoItemsFromTable'));
         // @dd($isSubscipe);
     }
     public function thankyou()

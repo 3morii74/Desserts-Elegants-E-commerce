@@ -26,7 +26,7 @@
         <div class="container w-full px-5 py-6 mx-auto ">
             <div class="flex justify-center">
                 <div class="grid lg:grid-cols-4 gap-y-6 px-10 py-12 bg-gray-100 rounded-lg">
-                    @foreach ($specials as $menu) <!-- BEST SELLERS -->
+                    @foreach ($topTwoItemsFromTable as $menu) <!-- BEST SELLERS -->
                     <div class="max-w-xs mx-4 mb-3 mt-4 rounded-lg shadow-lg hover:shadow ">
                         <img class="w-full h-48" src="{{ Storage::url($menu->image) }}" alt="Image" />
                         <div class="px-6 py-4">

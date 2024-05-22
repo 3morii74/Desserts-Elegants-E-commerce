@@ -33,6 +33,15 @@ class AdminStaticPageController extends Controller
 
         return view('admin.statistics.index' , compact('topTwoItemsFromTable' , 'labels' ,'data'));
     }
+    public function BestSelling()
+    {
+        $items = BestSellingItems::all();
+        $sortedItems = $items->sortByDesc('sales_volume');
+        $topTwoItems = $sortedItems->take(2);
+        $itemIds = $topTwoItems->pluck('item_id');
+        $topTwoItemsFromTable = Item::whereIn('id', $itemIds)->get();
+        return $topTwoItemsFromTable;
+    }
 
 
 }
