@@ -20,14 +20,10 @@ class NewItemCreated extends Mailable
      *
      * @return void
      */
-    public function __construct(Item $item, $email)
+    public function __construct($id)
     {
+        $item = Item::find($id);
         $this->item = $item;
-        $this->sendEmail($email);
-    }
-    protected function sendEmail($email)
-    {
-        Mail::to($email)->send($this);
     }
     public function build()
     {

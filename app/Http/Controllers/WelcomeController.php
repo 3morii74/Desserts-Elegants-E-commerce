@@ -14,7 +14,6 @@ class WelcomeController extends Controller
     {
         $itemController = new ItemController;
         $itemObjects[] = $itemController->getAllItems();
-        // @dd($itemController->getAllItems());
         $specials = Category::all();
         $user = auth()->user();
         $isSubscipe=0;
@@ -25,7 +24,7 @@ class WelcomeController extends Controller
         $staticPage = new AdminStaticPageController;
         $topTwoItemsFromTable = $staticPage->BestSelling();
         return view('welcome', compact('specials' , 'isSubscipe' , 'topTwoItemsFromTable'));
-        // @dd($isSubscipe);
+
     }
     public function thankyou()
     {

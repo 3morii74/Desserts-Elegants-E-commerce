@@ -53,7 +53,7 @@ class CartController extends Controller
 
         // Optionally, you can return a response indicating success
         $category = request()->category_id;
-        return redirect()->route('categories.show', ['category' => $category]);
+        return redirect()->back()->with('success' , 'Item add');
     }
 
     /**

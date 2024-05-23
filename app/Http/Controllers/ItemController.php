@@ -23,6 +23,16 @@ class ItemController extends Controller
         }
         return $this->itemObjects;
     }
+    public function getItem($id)
+    {
+        $items = $this->getAllItems();
+        foreach ($items as $item) {
+            if($item->getId() == $id) {
+                return $item;
+            }
+        }
+        return null;
+    }
     public function indexAdmin()
     {
         $Items = $this->getAllItems();
@@ -37,6 +47,9 @@ class ItemController extends Controller
     public function storeAdmin()
     {
         $category_id = request()->categories[0];
+        if (!request()->hasFile('image') || !request()->file('image')->isValid()) {
+            return back()->withErrors(['image' => 'The image file is required and must be valid.']);
+        }
         $image = request()->file('image')->store('public/menus');
         $Item = Item::create([
             'name' => request()->name,

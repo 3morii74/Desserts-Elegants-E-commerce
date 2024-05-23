@@ -1,6 +1,16 @@
 <!-- ITEMS IN CATEGORY -->
 
 <x-guest-layout>
+    @if(session('success'))
+    <div id="successMessage" style="background-color: #d4edda; color: #155724; border-color: #c3e6cb; padding: 0.75rem 1.25rem; margin-bottom: 1rem; border: 1px solid transparent; border-radius: 0.25rem;">
+        {{ session('success') }}
+    </div><script>
+        // Hide the success message after 5 seconds
+        setTimeout(function() {
+            document.getElementById('successMessage').style.display = 'none';
+        }, 2000);
+    </script>
+@endif
     <div class="container w-full px-5 py-6 mx-auto">
         <div class="grid lg:grid-cols-4 gap-y-6">
             @foreach ($category as $menu)

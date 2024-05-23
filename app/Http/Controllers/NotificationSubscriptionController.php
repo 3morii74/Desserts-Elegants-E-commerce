@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 use App\Models\NotificationSubscription;
 use App\Models\Item;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ItemController;
+
 
 use App\Models\User;
 
@@ -15,7 +18,6 @@ class NotificationSubscriptionController extends Controller
     public function subscribe()
     {
         $user = auth()->user();
-        // @dd($user);
         NotificationSubscription::create([
             'user_id' => $user->id
         ]);
@@ -33,14 +35,13 @@ class NotificationSubscriptionController extends Controller
 
     public function notify($item)
     {
-        $item = Item::findOrFail($item);
-        $users = NotificationSubscription::all();
-
-        foreach ($users as $user) {
-            $email =User::where('id',$user->user_id)->first();
-            $email = $email->email;
-            // @dd($email);
-            new NewItemCreated($item , $email);
+        $ItemController = new ItemController;
+        $item = $ItemController->getItem($item);
+        $userController = new UserController;
+        $users = $userController->getAllUserNotificationSubscription();
+        foreach ($users as $id) {
+            $user = $userController->getUser($id->user_id);
+            $user->SendEmail($item);
         }
         return to_route('admin.items.index')->with('success', 'Item created successfully.');
     }
