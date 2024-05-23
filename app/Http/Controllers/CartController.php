@@ -8,6 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Services\BaseCartItemOperation;
+use App\Services\IncrementCartItemDecorator;
+use App\Services\DecrementCartItemDecorator;
 
 class CartController extends Controller
 {
@@ -114,37 +117,18 @@ class CartController extends Controller
      */
     public function decrementItem($item)
     {
-        $user = Auth::user();
-
-        $cartItem = CartItem::where('user_id', $user->id)
-            ->where('item', $item)
-            ->first();
-
-
-        $itemObject = Item::where('name', $item)->first();
-
-        $cartItem->update([
-            'quantity' =>  $cartItem->quantity - 1,
-            'price' => $cartItem->price - $itemObject->price, // Update the price based on the new quantity
-        ]);
+        $baseOperation = new BaseCartItemOperation();
+        $operation = new DecrementCartItemDecorator($baseOperation);
+        $operation->updateItem($item);
 
         return redirect()->route('item.show');
     }
 
     public function incrementItem($item)
     {
-        $user = Auth::user();
-
-        $cartItem = CartItem::where('user_id', $user->id)
-            ->where('item', $item)
-            ->first();
-
-        $itemObject = Item::where('name', $item)->first();
-
-        $cartItem->update([
-            'quantity' =>  $cartItem->quantity + 1,
-            'price' => $cartItem->price + $itemObject->price, // Update the price based on the new quantity
-        ]);
+        $baseOperation = new BaseCartItemOperation();
+        $operation = new IncrementCartItemDecorator($baseOperation);
+        $operation->updateItem($item);
 
         return redirect()->back();
     }
